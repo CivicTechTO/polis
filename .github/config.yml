@@ -1,0 +1,21 @@
+# This is for documentation purposes, and not actually used as config in code yet.
+# See: https://github.com/repository-settings/app
+# See: https://github.com/repository-settings/app/blob/master/docs/plugins/rulesets.md
+rulesets:
+  - name: Only allow workflow to sync edge branch
+    target: branch
+    enforcement: active
+    bypass_actors:
+      # Only deploy key with write access can bypass, not any admin user.
+      - actor_id: null
+        actor_type: DeployKey
+
+    conditions:
+      ref_name:
+        include:
+          - "refs/heads/edge"
+        exclude: []
+    rules:
+      - type: update
+        parameters:
+          update_allows_fetch_and_merge: true
