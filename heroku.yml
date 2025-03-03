@@ -12,5 +12,3 @@ build:
   #image: release
   #command:
     #- ./bin/deploy-static-assets.clj --bucket $STATIC_ASSET_DEPLOY_BUCKET
-
-
