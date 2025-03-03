@@ -10,6 +10,7 @@ dotenv.config();
 
 import Promise from "bluebird";
 import express from "express";
+import slash from 'express-slash';
 import morgan from "morgan";
 
 import Config from "./src/config";
@@ -21,6 +22,11 @@ const app = express();
 // 'dev' format is
 // :method :url :status :response-time ms - :res[content-length]
 app.use(morgan('dev'));
+
+// handle GET and HEAD requests for URLs without matching routes by adding or removing a trailing slash
+const router = express.Router({ strict: true });
+app.use(router);
+app.use(slash());
 
 // Trust the X-Forwarded-Proto and X-Forwarded-Host, but only on private subnets.
 // See: https://github.com/pol-is/polis/issues/546
