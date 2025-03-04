@@ -10,6 +10,7 @@ dotenv.config();
 
 import Promise from "bluebird";
 import express from "express";
+import slash from 'express-slash';
 import morgan from "morgan";
 
 import Config from "./src/config";
@@ -236,6 +237,9 @@ helpersInitialized.then(
     }
     app.use(middleware_log_request_body);
     app.use(middleware_log_middleware_errors);
+
+    // handle GET and HEAD requests for URLs without matching routes by adding or removing a trailing slash
+    app.use(slash());
 
     app.all("/api/v3/*", addCorsHeader);
     app.all("/font/*", addCorsHeader);
