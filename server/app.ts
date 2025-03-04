@@ -24,8 +24,6 @@ const app = express();
 app.use(morgan('dev'));
 
 // handle GET and HEAD requests for URLs without matching routes by adding or removing a trailing slash
-const router = express.Router({ strict: true });
-app.use(router);
 app.use(slash());
 
 // Trust the X-Forwarded-Proto and X-Forwarded-Host, but only on private subnets.
