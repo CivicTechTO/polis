@@ -137,6 +137,23 @@ const resolveWith = (x: { body?: { user_id: string } }) => {
 //   user: { email: 'asdf@adsf.com', user_id: "12345" },
 // };
 
+function getAcceptLanguage(req: { headers?: Headers }){
+  return req?.headers?.["accept-language"] ||
+  req?.headers?.["Accept-Language"] ||
+  "en-US";
+}
+
+function getUiLang(acceptLanguage: string){
+  // "en-US,en;q=0.8,da;q=0.6,it;q=0.4,es;q=0.2,pt-BR;q=0.2,pt;q=0.2" --> "en-US"
+  const parsedLanguages = acceptLanguage.split(",").map(function(languageStr: string){
+    const [code, qValue] = languageStr.split(";q=");
+    return { code: code.trim(), q: qValue? parseFloat(qValue) : 1.0};
+  });
+  parsedLanguages.sort((a, b) => b.q - a.q);
+
+  return parsedLanguages[0].code.substring(0, 2);
+}
+
 if (devMode) {
   BluebirdPromise.longStackTraces();
 }
@@ -8037,15 +8054,10 @@ Email verified! You can close this tab or hit the back button.
       }
     }
 
-    let acceptLanguage =
-      req?.headers?.["accept-language"] ||
-      req?.headers?.["Accept-Language"] ||
-      "en-US";
+    const acceptLanguage = getAcceptLanguage(req);
 
     if (req.p.lang === "acceptLang") {
-      // "en-US,en;q=0.8,da;q=0.6,it;q=0.4,es;q=0.2,pt-BR;q=0.2,pt;q=0.2" --> "en-US"
-      // req.p.lang = acceptLanguage.match("^[^,;]*")[0];
-      req.p.lang = acceptLanguage.substr(0, 2);
+      req.p.lang = getUiLang(acceptLanguage);
     }
 
     getPermanentCookieAndEnsureItIsSet(req, res);
@@ -13834,7 +13846,7 @@ Thanks for using Polis!
   );
 
   function fetchIndex(
-    req: { path: string; headers?: { host: string } },
+    req: { path: string; headers?: Headers },
     res: {
       writeHead: (arg0: number, arg1: { Location: string }) => void;
       end: () => any;
@@ -13906,7 +13918,7 @@ Thanks for using Polis!
     }
   );
 
-  function fetchIndexForConversation(req: { path: string }, res: any) {
+  function fetchIndexForConversation(req: { path: string, headers?: Headers }, res: any) {
     logger.debug("fetchIndexForConversation", req.path);
     let match = req.path.match(/[0-9][0-9A-Za-z]+/);
     let conversation_id: any;
@@ -13940,6 +13952,7 @@ Thanks for using Polis!
       .then(function (x: any) {
         let preloadData = {
           conversation: x,
+          ui_lang: getUiLang(getAcceptLanguage(req))
           // Nothing user-specific can go here, since we want to cache these per-conv index files on the CDN.
         };
         fetchIndex(req, res, preloadData, staticFilesParticipationPort);
