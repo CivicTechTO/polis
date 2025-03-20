@@ -13,7 +13,7 @@ import Url from '../../util/url'
 import { Box, Heading, Button, Text } from 'theme-ui'
 import Conversation from './conversation'
 
-import { withRouter } from '../../../withRouter'
+import { withRouter } from '../../withRouter'
 
 @connect((state) => state.conversations)
 class Conversations extends React.Component {

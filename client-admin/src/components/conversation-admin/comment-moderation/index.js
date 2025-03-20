@@ -14,7 +14,7 @@ import ModerateCommentsAccepted from './moderate-comments-accepted'
 import ModerateCommentsRejected from './moderate-comments-rejected'
 
 import { Routes, Route, Link } from 'react-router-dom'
-import { withRouter } from '../../../../withRouter'
+import { withRouter } from '../../../withRouter'
 
 const mapStateToProps = (state, ownProps) => {
   return {

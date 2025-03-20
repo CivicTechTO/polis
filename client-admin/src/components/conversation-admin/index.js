@@ -7,7 +7,7 @@ import { Flex, Box, jsx } from 'theme-ui'
 import { populateZidMetadataStore, resetMetadataStore } from '../../actions'
 import { Route, Link, Routes } from 'react-router-dom'
 
-import { withRouter } from '../../withRouter'
+import { withRouter } from '../withRouter'
 
 import ConversationConfig from './conversation-config'
 import ConversationStats from './stats'
