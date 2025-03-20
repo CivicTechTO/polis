@@ -1,7 +1,7 @@
 // Copyright (C) 2012-present, The Authors. This program is free software: you can redistribute it and/or  modify it under the terms of the GNU Affero General Public License, version 3, as published by the Free Software Foundation. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details. You should have received a copy of the GNU Affero General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react'
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
@@ -13,11 +13,18 @@ import Url from '../../util/url'
 import { Box, Heading, Button, Text } from 'theme-ui'
 import Conversation from './conversation'
 
+function withRouter(Component) {
+  function ComponentWithRouterProp(props) {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const params = useParams();
+    return <Component {...props} router={{ location, navigate, params }} />;
+  }
+  return ComponentWithRouterProp;
+}
+
 @connect((state) => state.conversations)
 class Conversations extends React.Component {
-  const location = useLocation();
-  const navigate = useNavigate();
-
   constructor(props) {
     super(props)
     this.state = {
@@ -37,6 +44,7 @@ class Conversations extends React.Component {
   }
 
   goToConversation = (conversation_id) => {
+    const { location, navigate } = this.props.router;
     return () => {
       if (location.pathname === '/other-conversations') {
         window.open(`${Url.urlPrefix}${conversation_id}`, '_blank')
@@ -47,6 +55,7 @@ class Conversations extends React.Component {
   }
 
   filterCheck(c) {
+    const { location } = this.props.router;
     let include = true
 
     if (c.participant_count < this.state.filterMinParticipantCount) {
@@ -143,4 +152,4 @@ Conversations.propTypes = {
   })
 }
 
-export default Conversations
+export default withRouter(Conversations)
