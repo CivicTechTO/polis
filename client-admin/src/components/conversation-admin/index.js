@@ -7,6 +7,8 @@ import { Flex, Box, jsx } from 'theme-ui'
 import { populateZidMetadataStore, resetMetadataStore } from '../../actions'
 import { Route, Link, Routes } from 'react-router-dom'
 
+import { withRouter } from '../../withRouter'
+
 import ConversationConfig from './conversation-config'
 import ConversationStats from './stats'
 
@@ -20,8 +22,9 @@ import Reports from './report/reports'
 @connect((state) => state.zid_metadata)
 class ConversationAdminContainer extends React.Component {
   loadZidMetadata() {
+    const { conversation_id } = this.props.router.params;
     this.props.dispatch(
-      populateZidMetadataStore(this.props.match.params.conversation_id)
+      populateZidMetadataStore(conversation_id)
     )
   }
 
@@ -42,7 +45,7 @@ class ConversationAdminContainer extends React.Component {
   }
 
   render() {
-    const { match, location } = this.props
+    const { location, params } = this.props.router;
 
     const url = location.pathname.split('/')[3]
 
@@ -128,4 +131,4 @@ class ConversationAdminContainer extends React.Component {
   }
 }
 
-export default ConversationAdminContainer
+export default withRouter(ConversationAdminContainer)
