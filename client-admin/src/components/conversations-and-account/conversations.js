@@ -13,15 +13,7 @@ import Url from '../../util/url'
 import { Box, Heading, Button, Text } from 'theme-ui'
 import Conversation from './conversation'
 
-function withRouter(Component) {
-  function ComponentWithRouterProp(props) {
-    const location = useLocation();
-    const navigate = useNavigate();
-    const params = useParams();
-    return <Component {...props} router={{ location, navigate, params }} />;
-  }
-  return ComponentWithRouterProp;
-}
+import { withRouter } from '../../../withRouter'
 
 @connect((state) => state.conversations)
 class Conversations extends React.Component {

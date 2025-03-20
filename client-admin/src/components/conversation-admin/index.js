@@ -46,8 +46,8 @@ class ConversationAdminContainer extends React.Component {
 
   render() {
     const { location, params } = this.props.router;
-
-    const url = location.pathname.split('/')[3]
+    let baseUrl = `/conversation/${params.conversation_id}`;
+    const urlSegment = location.pathname.split('/')[3] || '';
 
     return (
       <Flex>
@@ -59,71 +59,55 @@ class ConversationAdminContainer extends React.Component {
           </Box>
           <Box sx={{ mb: [3] }}>
             <Link
-              sx={{ variant: url ? 'links.nav' : 'links.activeNav' }}
-              to={`${match.url}`}>
+              sx={{ variant: !urlSegment ? 'links.activeNav' : 'links.nav' }}
+              to={`${baseUrl}`}>
               Configure
             </Link>
           </Box>
           <Box sx={{ mb: [3] }}>
             <Link
               sx={{
-                variant: url === 'share' ? 'links.activeNav' : 'links.nav'
+                variant: urlSegment === 'share' ? 'links.activeNav' : 'links.nav'
               }}
-              to={`${match.url}/share`}>
+              to={`${baseUrl}/share`}>
               Distribute
             </Link>
           </Box>
           <Box sx={{ mb: [3] }}>
             <Link
               sx={{
-                variant: url === 'comments' ? 'links.activeNav' : 'links.nav'
+                variant: urlSegment === 'comments' ? 'links.activeNav' : 'links.nav'
               }}
-              to={`${match.url}/comments`}>
+              to={`${baseUrl}/comments`}>
               Moderate
             </Link>
           </Box>
           <Box sx={{ mb: [3] }}>
             <Link
               sx={{
-                variant: url === 'stats' ? 'links.activeNav' : 'links.nav'
+                variant: urlSegment === 'stats' ? 'links.activeNav' : 'links.nav'
               }}
-              to={`${match.url}/stats`}>
+              to={`${baseUrl}/stats`}>
               Monitor
             </Link>
           </Box>
           <Box sx={{ mb: [3] }}>
             <Link
               sx={{
-                variant: url === 'reports' ? 'links.activeNav' : 'links.nav'
+                variant: urlSegment === 'reports' ? 'links.activeNav' : 'links.nav'
               }}
-              to={`${match.url}/reports`}>
+              to={`${baseUrl}/reports`}>
               Report
             </Link>
           </Box>
         </Box>
         <Box sx={{ p: [4], flex: '0 0 auto', maxWidth: '35em', mx: [4] }}>
           <Routes>
-            <Route
-              exact
-              path={`${match.path}/`}
-              element={<ConversationConfig />}
-            />
-            <Route
-              exact
-              path={`${match.path}/share`}
-              element={<ShareAndEmbed />}
-            />
-            <Route exact path={`${match.path}/reports`} element={<Reports />} />
-            <Route
-              path={`${match.path}/comments`}
-              element={<ModerateComments />}
-            />
-            <Route
-              exact
-              path={`${match.path}/stats`}
-              element={<ConversationStats />}
-            />
-            {/* <Route exact path={`${match.path}/export`} element={<DataExport />} /> */}
+            <Route path={`${baseUrl}/`} element={<ConversationConfig />} />
+            <Route path={`${baseUrl}/share`} element={<ShareAndEmbed />} />
+            <Route path={`${baseUrl}/reports`} element={<Reports />} />
+            <Route path={`${baseUrl}/comments`} element={<ModerateComments />} />
+            <Route path={`${baseUrl}/stats`} element={<ConversationStats />} />
           </Routes>
         </Box>
       </Flex>

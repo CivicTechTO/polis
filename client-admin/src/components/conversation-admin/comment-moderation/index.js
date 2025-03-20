@@ -14,6 +14,7 @@ import ModerateCommentsAccepted from './moderate-comments-accepted'
 import ModerateCommentsRejected from './moderate-comments-rejected'
 
 import { Routes, Route, Link } from 'react-router-dom'
+import { withRouter } from '../../../../withRouter'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -30,8 +31,8 @@ const pollFrequency = 60000
 @connect(mapStateToProps)
 class CommentModeration extends React.Component {
   loadComments() {
-    const { match } = this.props
-    this.props.dispatch(populateAllCommentStores(match.params.conversation_id))
+    const { conversation_id } = this.props.router.params
+    this.props.dispatch(populateAllCommentStores(conversation_id))
   }
 
   componentWillMount() {
@@ -49,12 +50,12 @@ class CommentModeration extends React.Component {
   }
 
   render() {
+    const { location } = this.props.router
+    const urlSegment = location.pathname.split('/')[4] || ''
+
     if (ComponentHelpers.shouldShowPermissionsError(this.props)) {
       return <NoPermission />
     }
-    const { match, location } = this.props
-
-    const url = location.pathname.split('/')[4]
 
     return (
       <Box>
@@ -71,9 +72,9 @@ class CommentModeration extends React.Component {
           <Link
             sx={{
               mr: [4],
-              variant: url ? 'links.nav' : 'links.activeNav'
+              variant: !urlSegment ? 'links.activeNav' : 'links.nav'
             }}
-            to={`${match.url}`}>
+            to={`${this.props.router.location.pathname.split('/comments')[0]}/comments`}>
             Unmoderated{' '}
             {this.props.unmoderated.unmoderated_comments
               ? this.props.unmoderated.unmoderated_comments.length
@@ -82,9 +83,9 @@ class CommentModeration extends React.Component {
           <Link
             sx={{
               mr: [4],
-              variant: url === 'accepted' ? 'links.activeNav' : 'links.nav'
+              variant: urlSegment === 'accepted' ? 'links.activeNav' : 'links.nav'
             }}
-            to={`${match.url}/accepted`}>
+            to={`${this.props.router.location.pathname.split('/comments')[0]}/comments/accepted`}>
             Accepted{' '}
             {this.props.accepted.accepted_comments
               ? this.props.accepted.accepted_comments.length
@@ -93,9 +94,9 @@ class CommentModeration extends React.Component {
           <Link
             sx={{
               mr: [4],
-              variant: url === 'rejected' ? 'links.activeNav' : 'links.nav'
+              variant: urlSegment === 'rejected' ? 'links.activeNav' : 'links.nav'
             }}
-            to={`${match.url}/rejected`}>
+            to={`${this.props.router.location.pathname.split('/comments')[0]}/comments/rejected`}>
             Rejected{' '}
             {this.props.rejected.rejected_comments
               ? this.props.rejected.rejected_comments.length
@@ -105,18 +106,15 @@ class CommentModeration extends React.Component {
         <Box>
           <Routes>
             <Route
-              exact
-              path={`${match.url}`}
+              path={`${this.props.router.location.pathname.split('/comments')[0]}/comments`}
               element={<ModerateCommentsTodo />}
             />
             <Route
-              exact
-              path={`${match.url}/accepted`}
+              path={`${this.props.router.location.pathname.split('/comments')[0]}/comments/accepted`}
               element={<ModerateCommentsAccepted />}
             />
             <Route
-              exact
-              path={`${match.url}/rejected`}
+              path={`${this.props.router.location.pathname.split('/comments')[0]}/comments/rejected`}
               element={<ModerateCommentsRejected />}
             />
           </Routes>
@@ -126,4 +124,4 @@ class CommentModeration extends React.Component {
   }
 }
 
-export default CommentModeration
+export default withRouter(CommentModeration)
