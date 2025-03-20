@@ -131,7 +131,6 @@ class App extends React.Component {
             element={<Navigate to={location.pathname.slice(0, -1)} replace />} />
           <Route path="/home" element={<Home />} />
           <Route path="/signin" element={<SignInWrapper />} />
-          {/* <Route path="/signin" element={<SignIn />} /> */}
           <Route path="/signout" element={<SignOut />} />
           <Route path="/createuser" element={<CreateUser />} />
 
