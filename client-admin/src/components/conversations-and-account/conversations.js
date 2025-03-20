@@ -1,6 +1,7 @@
 // Copyright (C) 2012-present, The Authors. This program is free software: you can redistribute it and/or  modify it under the terms of the GNU Affero General Public License, version 3, as published by the Free Software Foundation. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public License for more details. You should have received a copy of the GNU Affero General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import React from 'react'
+import { useLocation, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import {
@@ -14,6 +15,9 @@ import Conversation from './conversation'
 
 @connect((state) => state.conversations)
 class Conversations extends React.Component {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   constructor(props) {
     super(props)
     this.state = {
@@ -34,11 +38,11 @@ class Conversations extends React.Component {
 
   goToConversation = (conversation_id) => {
     return () => {
-      if (this.props.history.pathname === 'other-conversations') {
+      if (location.pathname === '/other-conversations') {
         window.open(`${Url.urlPrefix}${conversation_id}`, '_blank')
         return
       }
-      this.props.history.push(`/m/${conversation_id}`)
+      navigate(`/m/${conversation_id}`);
     }
   }
 
@@ -49,12 +53,12 @@ class Conversations extends React.Component {
       include = false
     }
 
-    if (this.props.history.pathname === 'other-conversations') {
+    if (location.pathname === '/other-conversations') {
       // filter out conversations i do own
       include = !c.is_owner
     }
 
-    if (this.props.history.pathname !== 'other-conversations' && !c.is_owner) {
+    if (location.pathname !== '/other-conversations' && !c.is_owner) {
       // if it's not other convos and i'm not the owner, don't show it
       // filter out convos i don't own
       include = false
