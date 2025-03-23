@@ -2,6 +2,7 @@
 
 Polis is an AI powered sentiment gathering platform. More organic than surveys and less effort than focus groups.
 
+
 For a detailed methods paper, see [Polis: Scaling Deliberation by Mapping High Dimensional Opinion Spaces][methods-paper].
 
    [methods-paper]: https://www.e-revistes.uji.es/index.php/recerca/article/view/5516/6558
