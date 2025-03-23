@@ -57,8 +57,9 @@ Visit <http://localhost:80/createuser> 🚀
 
 *   **Running Polis:**  See [Running Polis](#running-polis) below for more details.
 *   **Configuration:** See [`docs/configuration.md`](docs/configuration.md) for deployment configuration.
-*   **Deployment:** See [`docs/deployment.md`](docs/deployment.md) (Create this file - see suggestions below).  This should cover production setup, SSL/HTTPS, and scaling.  **Specifically, this file should document the Azure deployment process used for civictech-polis.azurewebsites.net.**
-*   **Contributing:** See [CONTRIBUTING.md](CONTRIBUTING.md) (Create this file - see suggestions below).
+*   **Deployment:** See [`docs/deployment.md`](docs/deployment.md) for deployment bash commands.
+*   **Contributing:** See [CONTRIBUTING.md](https://github.com/compdemocracy/polis/blob/edge/CONTRIBUTING.md) for how to contribute upstream polis main repository.
+*   **Contributing:** See [our wiki](https://github.com/CivicTechTO/polis/wiki#if-you) for how to contribute to this fork.
 
 ---
 ## Running Polis
