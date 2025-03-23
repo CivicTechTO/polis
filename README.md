@@ -10,16 +10,14 @@ Polis is an AI-powered sentiment gathering platform. More organic than surveys a
    [docker-image-builds]: https://hub.docker.com/u/newjerseystyle
    [e2e-tests]: https://github.com/CivicTechTO/polis/actions?query=workflow%3A%22E2E+Tests%22
 
----
 
 ## What is Polis?
 
 Polis is a platform for gathering, analyzing, and understanding sentiment at scale.  It uses AI to help facilitate large-scale, open-ended discussions.
 
 *   **For a detailed methods paper**, see [Polis: Scaling Deliberation by Mapping High Dimensional Opinion Spaces][methods-paper].
-       [methods-paper]: https://www.e-revistes.uji.es/index.php/recerca/article/view/5516/6558
 
----
+       [methods-paper]: https://www.e-revistes.uji.es/index.php/recerca/article/view/5516/6558
 
 ## Quick Links 🪁 🎈
 
@@ -30,16 +28,15 @@ Polis is a platform for gathering, analyzing, and understanding sentiment at sca
 *   **Technical Issues:** [https://github.com/compdemocracy/polis/issues](https://github.com/compdemocracy/polis/issues)
 *   **High-Impact Support:**  <mailto:hello@compdemocracy.org> (For significant deployments requiring more support)
 * **Community Support:** [https://github.com/CivicTechTO/polis/issues](https://github.com/CivicTechTO/polis/issues)
-* **Talk to a person / Polis 101** : [https://civictech.ca](https://civictech.ca) (CivicTech Hacknight - Ask for a Polis 101)
+* **Talk to a person / Polis 101** : [https://civictech.ca](https://civictech.ca) (Join CivicTech Hacknight - Ask for a Polis 101)
 *   **CivicTech Slack:**  [https://civictech.ca](https://civictech.ca) (Join the `#polis` channel)
 
----
 
 ## Getting Started (For Developers & Deployers)
 
 This section is for those who want to run their own instance of the CivicTech fork of Polis or contribute to development.
 
-Polis comes with Docker infrastructure for running a complete system, whether for a [production deployment](#-production-deployment) or a [development environment](#-development-tooling) (details for each can be found in later sections of this document).
+Polis comes with Docker infrastructure for running a complete system, whether for a [production deployment](#docs/deployment.md#-production-deployment) or a [development environment](#-development-mode).
 
 ### Quick Start (Development)
 
@@ -61,7 +58,6 @@ Visit <http://localhost:80/createuser> 🚀
 *   **Contributing:** See [CONTRIBUTING.md](https://github.com/compdemocracy/polis/blob/edge/CONTRIBUTING.md) for how to contribute upstream polis main repository.
 *   **Contributing:** See [our wiki](https://github.com/CivicTechTO/polis/wiki#if-you) for how to contribute to this fork.
 
----
 ## Running Polis
 
 Polis uses Docker and Docker Compose for easy setup.
@@ -90,23 +86,16 @@ For development, use the following command to enable live code reloading, debugg
 ```bash
 docker compose -f docker-compose.yml -f docker-compose.dev.yml --profile postgres up --build
 ```
-You can add your own override file:  `docker compose -f docker-compose.yml -f docker-compose.my-overrides.yml up`
 
-This enables:
-
+**This enables:**
 - Live code reloading and static type checking of the server code
 - A nREPL connection port open for connecting to the running math process
 - Ports open for connecting directly to the database container
-- Live code reloading for the client repos (in process)
-- etc.
 
-This command takes advantage of the `docker-compose.dev.yml` _overlay_ file, which layers the developer conveniences describe above into the base system, as described in the `docker-compose.yml` file.
-You can specify these `-f docker-compose.yml -f docker-compose.dev.yml` arguments for any `docker` command which you need to take advantage of these features (not just `docker compose --profile postgres up`).
-
-You can create your own `docker-compose.x.yml` file as an overlay and add or modify any values you need to differ
-from the defaults found in the `docker-compose.yml` file and pass it as the second argument to the `docker compose -f` command above.
-
----
+**About docker compose overlay file:**  
+* `docker-compose.dev.yml` in above command is an _overlay_ file, which layers the developer conveniences describe above into the base system, as described in the `docker-compose.yml` file.  
+* You can create your own `docker-compose.x.yml` file as an overlay and add or modify any values you need to differ from the defaults found in the `docker-compose.yml` file and pass it as the second argument to the `docker compose -f` command above.  
+* You can specify these `-f docker-compose.yml -f docker-compose.dev.yml` arguments for any `docker` command which you need to take advantage of these features (not just `docker compose --profile postgres up`).
 
 ## Using a local or remote (non-docker) database
 
@@ -114,13 +103,11 @@ Omit the `--profile postgres` flag to use a local or remote database. You will n
 
 When using `make` commands, setting POSTGRES_DOCKER to `true` or `false` will determine whether to automatically include `--profile postgres` when it calls out to `docker compose`.
 
----
 
 ## Testing
 
 *   **End-to-End (E2E) Tests:** See [`e2e/README.md`](e2e/README.md) for instructions on running automated browser tests.
 
----
 
 ## Troubleshooting
 
@@ -128,7 +115,6 @@ When using `make` commands, setting POSTGRES_DOCKER to `true` or `false` will de
 *   **NPM Issues:** See [this issue](https://github.com/compdemocracy/polis/issues/1391) for potential solutions.
 *   **Apple Silicon (M1/M2) Issues:** You may need to use a [Rosetta terminal](https://support.apple.com/en-us/HT211861) for some dependencies.
 
----
 
 ## License
 
