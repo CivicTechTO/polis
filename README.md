@@ -1,11 +1,6 @@
 # Polis
 
-Polis is an AI powered sentiment gathering platform. More organic than surveys and less effort than focus groups.
-
-
-For a detailed methods paper, see [Polis: Scaling Deliberation by Mapping High Dimensional Opinion Spaces][methods-paper].
-
-   [methods-paper]: https://www.e-revistes.uji.es/index.php/recerca/article/view/5516/6558
+Polis is an AI-powered sentiment gathering platform. More organic than surveys and less effort than focus groups.
 
 <!-- Changes to badge text in URLs below, require changes to "name" value in .github/workflows/*.yml -->
 [![Docker Image Builds](https://github.com/CivicTechTO/polis/workflows/Docker%20image%20builds/badge.svg)][docker-image-builds]
@@ -17,39 +12,38 @@ For a detailed methods paper, see [Polis: Scaling Deliberation by Mapping High D
 
 ---
 
-## 🎈 🪁 Start here! 🪁 🎈
+## What is Polis?
 
-If you're interested in using or contributing to Polis, please see the following:
+Polis is a platform for gathering, analyzing, and understanding sentiment at scale.  It uses AI to help facilitate large-scale, open-ended discussions.
 
-- [📚 **knowledge base**][knowledge-base]: for a comprehensive wiki to help you understand and use the system
-- [🌐 **main deployment**](https://pol.is): the main deployment of Polis is at <https://pol.is>, and is
-  free to use for nonprofits and government
-- [💬 **discussions**][discussions]: for questions (QA) and discussion
-- [✔️ **issues**][issues]: for well-defined technical issues
-- [🏗️ **project board**][board]: somewhat incomplete, but still useful; We stopped around the time that Projects Beta came out, and we have a [Projects Beta Board][beta-board] that we'll eventually be migrating to
-- [✉️ reach out][hello]: if you are applying Polis in a high-impact context, and need more help than you're able to get through the public channels above
-
-   [knowledge-base]: https://compdemocracy.org/Welcome
-   [issues]: https://github.com/compdemocracy/polis/issues
-   [board]: https://github.com/compdemocracy/polis/projects/1
-   [beta-board]: https://github.com/compdemocracy/polis/projects/1
-   [discussions]: https://github.com/compdemocracy/polis/discussions
-   [hello]: mailto:hello@compdemocracy.org
-
-If you're trying to set up a Polis deployment or development environment, then please read the rest of this document 👇 ⬇️ 👇
+*   **For a detailed methods paper**, see [Polis: Scaling Deliberation by Mapping High Dimensional Opinion Spaces][methods-paper].
+       [methods-paper]: https://www.e-revistes.uji.es/index.php/recerca/article/view/5516/6558
 
 ---
 
-## ⚡ Running Polis
+## Quick Links 🪁 🎈
+
+*   **Main Deployment:** [https://pol.is](https://pol.is) (Free for nonprofits and governments)
+*   **CivicTech Deployment (This Fork):** [https://civictech-polis.azurewebsites.net/](https://civictech-polis.azurewebsites.net/)
+*   **Knowledge Base (Wiki):**  [https://compdemocracy.org/Welcome](https://compdemocracy.org/Welcome)  (Comprehensive user guide)
+*   **Discussions (Q&A):** [https://github.com/compdemocracy/polis/discussions](https://github.com/compdemocracy/polis/discussions)
+*   **Technical Issues:** [https://github.com/compdemocracy/polis/issues](https://github.com/compdemocracy/polis/issues)
+*   **High-Impact Support:**  <mailto:hello@compdemocracy.org> (For significant deployments requiring more support)
+* **Community Support:** [https://github.com/CivicTechTO/polis/issues](https://github.com/CivicTechTO/polis/issues)
+* **Talk to a person / Polis 101** : [https://civictech.ca](https://civictech.ca) (CivicTech Hacknight - Ask for a Polis 101)
+*   **CivicTech Slack:**  [https://civictech.ca](https://civictech.ca) (Join the `#polis` channel)
+
+---
+
+## Getting Started (For Developers & Deployers)
+
+This section is for those who want to run their own instance of the CivicTech fork of Polis or contribute to development.
 
 Polis comes with Docker infrastructure for running a complete system, whether for a [production deployment](#-production-deployment) or a [development environment](#-development-tooling) (details for each can be found in later sections of this document).
-As a consequence, the only prerequisite to running Polis is that you install a recent `docker` (and Docker Desktop if you are on Mac or Windows).
 
-If you aren't able to use Docker for some reason, the various Dockerfiles found in subdirectories (`math`, `server`, `*-client`) of this repository _can_ be used as a reference for how you'd set up a system manually.
-If you're interested in doing the legwork to support alternative infrastructure, please [let us know in an issue](https://github.com/compdemocracy.org/issues).
+### Quick Start (Development)
 
-### Quick Start
-
+Open terminal and enter:
 ```sh
 cp example.env .env
 make start
@@ -57,135 +51,45 @@ make start
 
 That should run docker compose with the development overlay (see below) and default configuration values.
 
-Visit `localhost:80/createuser` and get started.
+Visit <http://localhost:80/createuser> 🚀
 
-### Docker & Docker Compose
+### Detailed Instructions
 
-Newer versions of `docker` have `docker compose` built in as a subcommand.
-If you are using an older version (and don't want to upgrade), you'll need to separately install `docker-compose`, and use that instead in the instructions that follow.
-Note however that the newer `docker compose` command is required to [take advantage of Docker Swarm](/docs/scaling#docker-compose-over-docker-swarm) as a scaling option.
-
-Many convenient commands are found in the Makefile. Run `make help` for a list of available commands.
-
-### Building and running the containers
-
-First clone the repository, then navigate via command line to the root directory and run the following command to build and run the docker containers.
-
-Copy the example.env file and modify as needed (although it should just work as is for development and testing purposes).
-
-```sh
-cp example.env .env
-```
-
-
-```sh
-docker compose --profile postgres up --build
-```
-
-If you get a permission error, try running this command with `sudo`.
-If this fixes the problem, sudo will be necessary for all other commands as well.
-To avoid having to use `sudo` in the future (on a Linux or Windows machine with WSL), [you can follow setup instructions here.](https://docs.docker.com/engine/install/linux-postinstall/)
-
-Once you've built the docker images, you can run without `--build`, which may be faster. Run
-
-```sh
-docker compose --profile postgres up
-```
-
-or simply
-
-```sh
-make start
-```
-
-Any time you want to _rebuild_ the images, just reaffix `--build` when you run. Another way to
-easily rebuild and start your containers is with `make start-rebuild`.
-
-If you have only changed configuration values in .env, you can recreate your containers without
-fully rebuilding them with `--force-recreate`. For example:
-
-```sh
-docker compose --profile postgres down
-docker compose --profile postgres up --force-recreate
-```
-
-To see what the environment of your containers is going to look like, run:
-
-```sh
-docker compose --profile postgres convert
-```
-
-#### Using a local or remote (non-docker) database
-
-Omit the `--profile postgres` flag to use a local or remote database. You will need to set the `DATABASE_URL` environment variable in your `.env` file to point to your database.
-
-When using `make` commands, setting POSTGRES_DOCKER to `true` or `false` will determine whether to automatically include `--profile postgres` when it calls out to `docker compose`.
-
-#### Production Mode Shortcuts
-
-The commands in the Makefile can be prefaced with PROD. If so, the "dev overlay" configuration in `docker-compose.dev.yml` will be ignored.
-Ports from services other than the HTTP proxy (80/443) will not be exposed. Containers will not mount local directories, watch for changes,
-or rebuild themselves. In theory this should be one way to run Polis in a production environment.
-
-You need a `prod.env` file:
-
-`cp example.env prod.env` (and update accordingly).
-
-Then you can run things like:
-
-```sh
-make PROD start
-
-make PROD start-rebuild
-```
-
-### Testing out your instance
-
-You can now test your setup by visiting `http://localhost:80/home`.
-
-Once the index page loads, you can create an account using the `/createuser` path.
-You'll be logged in right away; email validation is not required.
-
-When you're done working, you can end the process using `Ctrl+C`, or typing `docker compose --profile postgres down`
-if you are running in "detached mode".
-
-### Updating the system
-
-If you want to update the system, you may need to handle the following:
-
-- [⬆️ Run database migrations](docs/migrations.md), if there are new such
-- Update docker images by running with `--build` if there have been changes to the Dockerfiles
-  - consider using `--no-cache` if you'd like to rebuild from scratch, but note that this will take much longer
+*   **Running Polis:**  See [Running Polis](#running-polis) below for more details.
+*   **Configuration:** See [`docs/configuration.md`](docs/configuration.md) for deployment configuration.
+*   **Deployment:** See [`docs/deployment.md`](docs/deployment.md) (Create this file - see suggestions below).  This should cover production setup, SSL/HTTPS, and scaling.  **Specifically, this file should document the Azure deployment process used for civictech-polis.azurewebsites.net.**
+*   **Contributing:** See [CONTRIBUTING.md](CONTRIBUTING.md) (Create this file - see suggestions below).
 
 ---
+## Running Polis
 
-## 🚀 Production deployment
+Polis uses Docker and Docker Compose for easy setup.
 
-While the commands above will get a functional Polis system up and running, additional steps must be taken to properly configure, secure and scale the system.
-In particular
+### Prerequisites
 
-- [⚙️ Configure the system](docs/configuration.md), esp:
-  - the domain name you'll be serving from
-  - enable and add API keys for 3rd party services (e.g. automatic comment translation, spam filtering, etc)
-- [🔏 Set up SSL/HTTPS](docs/ssl.md), to keep the site secure
-- [📈 Scale](docs/scaling.md) for large or many concurrent conversations
+*   Docker and Docker Compose installed.  [Instructions for avoiding `sudo` with Docker](https://docs.docker.com/engine/install/linux-postinstall/).
 
-### Support
+### Basic Commands
 
-We encourage you to take advantage of the public channels above for support setting up a deployment.
-However, if you are deploying in a high impact context and need help, please [reach out to us][hello]
+*   **Start (Development):** `make start`  (Equivalent to `docker compose --profile postgres up`)
+*   **Start (Rebuild):** `make start-rebuild` (Rebuilds Docker images)
+*   **Start (Production - see docs/deployment.md for complete instructions):** `make PROD start` (Requires `prod.env`)
+*   **Stop:** `make stop` (Equivalent to `docker compose --profile postgres down`)
+*   **Help:** `make help` (Lists available commands)
+*   **View Configuration:** `docker compose --profile postgres convert`
+*   **Full Rebuild (Use with caution - wipes database):** `make start-FULL-REBUILD`
 
----
+### Using a local or remote (non-docker) database
+See [Using a local or remote (non-docker) database](#using-a-local-or-remote-non-docker-database) below
 
-## 💻 Development tooling
+### 💻 Development Mode
 
-Once you've gotten [Polis running (as described above)](#-running-polis), you can enable developer conveniences by running
+For development, use the following command to enable live code reloading, debugging, and other conveniences:
 
 ```bash
-docker compose -f docker-compose.yml -f docker-compose.dev.yml --profile postgres up
+docker compose -f docker-compose.yml -f docker-compose.dev.yml --profile postgres up --build
 ```
-
-(run with `--build` if this is your first time running, or if you need to rebuild containers)
+You can add your own override file:  `docker compose -f docker-compose.yml -f docker-compose.my-overrides.yml up`
 
 This enables:
 
@@ -201,50 +105,30 @@ You can specify these `-f docker-compose.yml -f docker-compose.dev.yml` argument
 You can create your own `docker-compose.x.yml` file as an overlay and add or modify any values you need to differ
 from the defaults found in the `docker-compose.yml` file and pass it as the second argument to the `docker compose -f` command above.
 
-### Testing
+---
 
-We use Cypress for automated, end-to-end browser testing for PRs on GitHub (see badge above).
-Please see [`e2e/README.md`](/e2e/README.md) for more information on running these tests locally.
+## Using a local or remote (non-docker) database
 
-### Miscellaneous & troubleshooting
+Omit the `--profile postgres` flag to use a local or remote database. You will need to set the `DATABASE_URL` environment variable in your `.env` file to point to your database.
 
-#### Docker Problems
+When using `make` commands, setting POSTGRES_DOCKER to `true` or `false` will determine whether to automatically include `--profile postgres` when it calls out to `docker compose`.
 
-A lot of issues might be resolved by killing all docker containers and/or restarting docker entirely. If that doesn't
-work, this will wipe all of your polis containers and volumes (**INCLUDING THE DATABASE VOLUME, so don't use this in prod!**) and completely rebuild them:
+---
 
-`make start-FULL-REBUILD`
+## Testing
 
-see also `make help` for additional commands that might be useful.
+*   **End-to-End (E2E) Tests:** See [`e2e/README.md`](e2e/README.md) for instructions on running automated browser tests.
 
-#### Git Configuration
+---
 
-Due to past file re-organizations, you may find the following git configuration helpful for looking at history:
+## Troubleshooting
 
-```sh
-git config --local include.path ../.gitconfig
-```
+*   **Docker Issues:** Try restarting Docker, killing all containers, or using `make start-FULL-REBUILD` (WARNING: This wipes the database).
+*   **NPM Issues:** See [this issue](https://github.com/compdemocracy/polis/issues/1391) for potential solutions.
+*   **Apple Silicon (M1/M2) Issues:** You may need to use a [Rosetta terminal](https://support.apple.com/en-us/HT211861) for some dependencies.
 
-#### Running as a background process
+---
 
-If you would like to run docker compose as a background process, run the `up` commands with the `--detach` flag, and use `docker compose --profile postgres down` to stop.
-
-#### Using Docker Machine as your development environment
-
-If your development machine is having trouble handling all of the docker containers, look into [using Docker Machine](/docs/docker-machine.md).
-
-#### Resolving problems with npm not finding libraries
-
-Sometimes npm/docker get in a weird state, especially with native libs, and fail to recover gracefully.
-You may get a message like `Error: Cannot find module .... bcrypt`.
-
-If this happens to you, try
-[following the instructions here.](https://github.com/compdemocracy/polis/issues/1391)
-
-#### Issues with Apple Silicon (M1 & M2) chips
-
-You may find it necessary to install some dependencies, namely nodejs and postgres stuff, in a [Rosetta terminal](https://support.apple.com/en-us/HT211861). Create an issue or reach out if you are having strange build issues on Apple computers.
-
-## ©️  License
+## License
 
 [AGPLv3 with additional permission under section 7](/LICENSE)
