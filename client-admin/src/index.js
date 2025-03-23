@@ -10,7 +10,7 @@ import { ThemeUIProvider } from 'theme-ui'
 import theme from './theme'
 import App from './app'
 
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
 import { createRoot } from 'react-dom/client';
 
 const store = configureStore()
@@ -21,7 +21,7 @@ root.render(
   <ThemeUIProvider theme={theme}>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <Route render={(routeProps) => <App {...routeProps} />}></Route>
       </BrowserRouter>
     </Provider>
   </ThemeUIProvider>

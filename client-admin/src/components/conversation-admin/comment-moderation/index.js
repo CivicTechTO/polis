@@ -13,7 +13,7 @@ import ModerateCommentsTodo from './moderate-comments-todo'
 import ModerateCommentsAccepted from './moderate-comments-accepted'
 import ModerateCommentsRejected from './moderate-comments-rejected'
 
-import { Routes, Route, Link } from 'react-router-dom'
+import { Switch, Route, Link } from 'react-router-dom'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -103,23 +103,23 @@ class CommentModeration extends React.Component {
           </Link>
         </Flex>
         <Box>
-          <Routes>
+          <Switch>
             <Route
               exact
               path={`${match.url}`}
-              element={<ModerateCommentsTodo />}
+              component={ModerateCommentsTodo}
             />
             <Route
               exact
               path={`${match.url}/accepted`}
-              element={<ModerateCommentsAccepted />}
+              component={ModerateCommentsAccepted}
             />
             <Route
               exact
               path={`${match.url}/rejected`}
-              element={<ModerateCommentsRejected />}
+              component={ModerateCommentsRejected}
             />
-          </Routes>
+          </Switch>
         </Box>
       </Box>
     )
