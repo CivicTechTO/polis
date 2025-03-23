@@ -59,3 +59,9 @@ jobs:
             sed -i 's/civictechto/${{ secrets.DOCKER_USERNAME }}/g' docker-compose.yml
           done
           docker compose --profile postgres push --ignore-push-failures
+
+      - name: Trigger Azure Redeploy
+        run: |
+          curl -X POST ${{ secrets.AZURE_WEBHOOK_URL }}
+        env:
+          AZURE_WEBHOOK_URL: ${{ secrets.AZURE_WEBHOOK_URL }}
