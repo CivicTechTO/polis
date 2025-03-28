@@ -74,7 +74,7 @@
         }
         function getUiLang() {
           var params = parseQueryParams(window.location.search);
-          return params.ui_lang;
+          return params.ui_lang || window.preload.ui_lang;
         }
 
         function ajaxGet(url, success, fail) {
@@ -268,7 +268,8 @@
       }
 
       if (window.ui_lang) {
-        document.getElementsByTagName("body")[0].setAttribute("lang", ui_lang);
+        document.getElementsByTagName("body")[0].setAttribute("lang", window.ui_lang);
+        document.getElementsByTagName("html")[0].setAttribute("lang", window.ui_lang);
       }
     </script>
 </body>
