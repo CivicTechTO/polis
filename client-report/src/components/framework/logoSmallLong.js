@@ -12,6 +12,7 @@ class PolisLogo extends React.Component {
           padding: "8px 0px 4px 10px",
         }}
         href="http://pol.is"
+        aria-label="Go to home page"
       >
         <svg
           width="120px"
