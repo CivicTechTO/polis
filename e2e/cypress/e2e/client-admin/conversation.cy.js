@@ -87,7 +87,8 @@ describe('Conversation: Configure', function () {
       cy.wait('@participationInit')
 
       cy.get('[data-view-name="participationView"]').should('be.visible')
-      cy.get('h1').contains('Test topic closed').should('be.visible')
+      cy.get('.POLIS_HEADLINE h1').contains('Test topic').should('be.visible')
+      cy.get('.POLIS_HEADLINE .no_you_vote').contains('closed').should('be.visible')
     })
   })
 })
