@@ -14,7 +14,7 @@ class PolisLogo extends React.Component {
   }
   render() {
     return (
-        <a style={this.styles().link} href="http://pol.is">
+        <a style={this.styles().link} href="http://pol.is" aria-label="Go to home page">
         <svg width="87px" height="100px" viewBox="0 0 87 100" >
             <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                 <g id="100x100-transparent">
