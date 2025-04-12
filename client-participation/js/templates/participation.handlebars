@@ -171,25 +171,26 @@
       <h1
         class="HeadingA"
         style="
-         margin-bottom: 10px;
+        margin-bottom: 10px;
+        display: inline-block;
         "
         dir="auto">
         {{topic}}
-        {{#unless is_active}}
+      </h1>
+      {{#unless is_active}}
         <span class="no_you_vote" style="
-         color: white;
-         background-color: rgb(231, 76, 60);
-         /* font-size: 0.7em; */
-         /* padding: .2em; */
-         font-size: 20px;
-         padding: 0px 10px;
-         border-radius: 3px;
-         position: relative;
-         top: -5px;
-         left: 6px;
+        color: white;
+        background-color: rgb(231, 76, 60);
+        /* font-size: 0.7em; */
+        /* padding: .2em; */
+        font-size: 20px;
+        padding: 0px 10px;
+        border-radius: 3px;
+        position: relative;
+        top: -5px;
+        left: 6px;
         ">closed</span>
       {{/unless}}
-      </h1>
     {{/ifDefined}}
     {{/unless}}
 
