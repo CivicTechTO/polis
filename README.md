@@ -1,6 +1,6 @@
 # Polis
 
-> :warning: We are migrating to [New Implementation](https://github.com/MaanasArora/convergent/) and archiving this repo!
+> :warning: We are migrating to [New Implementation](https://github.com/MaanasArora/convergent/) -> [Chorus](https://github.com/choruslabs/chorus) and archiving this repo!
 
 Polis is an AI-powered sentiment gathering platform. More organic than surveys and less effort than focus groups.
 
